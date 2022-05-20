@@ -3,8 +3,11 @@
 #include <sys/wait.h>
 #include <assert.h>
 #include "leercadena.h"
+#include "aux.h"
 
 #define MAX 100
+
+Array process;
 
 int lastElement(char ** arr){
     int count=0;
@@ -20,10 +23,11 @@ char ** returnArr(char ** arr){
     char **cadena  = arr; 
     cadena[lastElement(arr)-1]= NULL;
     
-    return cadena;
-    
-    
+    return cadena;    
 }
+
+
+
 
 int main(int argc, char* argv[]) {
   char **vector_cadenas;
@@ -42,12 +46,28 @@ int main(int argc, char* argv[]) {
       pid = fork();
       assert(pid >= 0);
       if( strcmp("&",vector_cadenas[lastElement(vector_cadenas)-1])==0  && pid==0){
+          //printf("Proceso: %d", getpid());
           execvp(vector_cadenas[0], returnArr(vector_cadenas));
+          
       } else if (pid == 0) {
-        execvp(vector_cadenas[0], vector_cadenas);
+             execvp(vector_cadenas[0], vector_cadenas);
+       
       }else if (arethere == 1 && pid>0){
-          continue;
-      } else {
+          insertArray(&process, pid); 
+          continue;   
+        
+      }
+      else {
+            if (strcmp("tareas",vector_cadenas[0])==0){
+            int num_process=process.used;
+            
+             for (int x=0; x< num_process; x++){
+               printf("%d\n”",process.array[x]);
+                }
+            }else if(strcmp("detener",vector_cadenas[0])==0){
+               
+               execvp(vector_cadenas, returnArr(vector_cadenas));
+            }
           wait(NULL);
       }
   }
