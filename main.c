@@ -62,16 +62,16 @@ int main(int argc, char* argv[]) {
             int num_process=process.used;
             
              for (int x=0; x< num_process; x++){
-               printf("%d\n”",process.array[x]);
+               printf("%d\n",process.array[x]);
                 }
             }else if(strcmp("detener",vector_cadenas[0])==0){
-               
-               execvp(vector_cadenas, returnArr(vector_cadenas));
-            }
+               execlp("kill", "kill", vector_cadenas[1], NULL);
+            } 
           wait(NULL);
+     
       }
-  }
   printf("Gracias por usar mi dummy shell ;-)\n");
 
   return 0;
+  }
 }
