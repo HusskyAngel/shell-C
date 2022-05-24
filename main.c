@@ -4,6 +4,9 @@
 #include <assert.h>
 #include "leercadena.h"
 #include "aux.h"
+#include <sys/types.h>
+#include <signal.h>
+
 
 #define MAX 100
 
@@ -65,13 +68,12 @@ int main(int argc, char* argv[]) {
                printf("%d\n",process.array[x]);
                 }
             }else if(strcmp("detener",vector_cadenas[0])==0){
-               execlp("kill", "kill", vector_cadenas[1], NULL);
+				kill(atoi(vector_cadenas[1]),9); 
             } 
           wait(NULL);
      
       }
-  printf("Gracias por usar mi dummy shell ;-)\n");
-
-  return 0;
-  }
+    }
+	printf("Gracias por usar mi dummy shell ;-)\n");
+	return 0;
 }
